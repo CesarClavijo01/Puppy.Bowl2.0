@@ -1,0 +1,74 @@
+body{
+    background-color: black;
+    color: #00A800;
+    text-decoration: underline;
+}
+
+.AllPlayersContainer{
+    margin: 20px;
+}
+
+.deleteBtn{
+    background-color: black;
+    color: red;
+}
+
+.playerNameContainer{
+    margin: 10px;
+}
+
+.infoBtn{
+    background-color: black;
+    color: blue;
+}
+
+.playerContainer{
+    margin: 15px;
+}
+
+.submitBtn{
+    margin: 5px;
+    color: #00A800;
+    background-color: black;
+}
+
+.navBar{
+    background-color: blueviolet;
+    font-size: large;
+    font-weight: bolder;
+    justify-content: end;
+    padding: 10px;
+    margin: 5px;
+    }
+
+.navBar a{
+    color: white;
+    position: relative;
+    left: 631px;
+    font-size: larger;
+}
+
+img{
+    width: 350px;
+}
+
+ol{
+    list-style: none;
+    margin: 0%;
+    padding: 0%;
+}
+
+.singlePlayerContainer{
+    border: solid white 3px;
+    display: inline-block;
+    padding: 30px;
+    margin: 10px;
+    position: relative;
+    left: 483px;
+    align-items: center;
+}
+
+.singlePlayerBox{
+    display: flex;
+    flex-direction: column;
+}
