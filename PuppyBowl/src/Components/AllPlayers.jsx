@@ -1,17 +1,19 @@
 import { useState, useEffect } from "react"
-import { GetAllPlayers, NewPlayer } from "../API"
+import { GetAllPlayers, NewPlayer, DeletePlayers } from "../API"
 import { useNavigate } from "react-router-dom";
 
-export default function AllPlayers({setSelectedPlayerId, selectedPlayerId}){
+export default function AllPlayers(){
     const [players, setPlayers] = useState([]);
     const [newPlayerName, setNewPlayerName] = useState(null);
     const [newPlayerBreed, setNewPlayerBreed] = useState(null);
-    const navigate = useNavigate()
+    const [searchValue, setSearchValue] = useState('');
+    const navigate = useNavigate();
 
 
     //fetch all players function
 
-    useEffect(() => { async function Players()
+    useEffect(() => { 
+        async function PlayersRender()
        { try{
            const fetchPlayers = await GetAllPlayers();
 
@@ -21,7 +23,7 @@ export default function AllPlayers({setSelectedPlayerId, selectedPlayerId}){
         catch(error){
             console.error(error);
         }}
-        Players()
+        PlayersRender()
     }, [])
 
     //submit new player function
@@ -37,14 +39,32 @@ export default function AllPlayers({setSelectedPlayerId, selectedPlayerId}){
             console.error(error);
         }
     }
+    
 
-    // // create a function that gets the id from a specific player
-    // function clickHandle(event){
-    //     //navigate to a page for that players info
-    //     navigate(`/${player.id}`)
-    // }
+        //search function
+        const handleChange = (event) => {
+            setSearchValue(event.target.value)
+        }
+    
+        const searchResults = players.filter((player) => {
+            const lowerCaseName = player.name.toLowerCase()
+            return lowerCaseName.includes(searchValue.toLowerCase())
+        })
 
-    if(players.length < 1 ){
+        console.log(searchResults)
+    
+
+    // call the delete function from api and make sure it deletes it from the dom
+    async function deleteHandler(id){
+        try{
+            const remove = await DeletePlayers(id);
+        }
+        catch(error){
+            console.error(error)
+        };
+    }
+
+    if(searchResults.length < 1 ){
         return(
             <div>Loading...</div>
         )
@@ -52,24 +72,28 @@ export default function AllPlayers({setSelectedPlayerId, selectedPlayerId}){
     return(
     <>
         <form className="searchForm">
-            <input type='text' placeholder="Search player"/>
-            <button className="searchBtn">Search</button>
+            <input 
+            className="search"
+            type='text' 
+            placeholder="Search player" 
+            onChange={handleChange} 
+            value={searchValue}/>
         </form>
         <div className="AllPlayersContainer">
             {
-                players.map(player => {
+                searchResults.map(result => {
                     return ( 
-                        <div  key={player.id} className="playerContainer">
-                            <button className="deleteBtn">X</button>
-                            <h1 className="playerNameContainer">{player.name}</h1>
-                            <button className="infoBtn" onClick={() => {navigate(`/player/${player.id}`)}}>More Info</button>
+                        <div  key={result.id} className="playerContainer">
+                            <button className="deleteBtn" onClick={() => {deleteHandler(result.id)}}>X</button>
+                            <h1 className="playerNameContainer">{result.name}</h1>
+                            <button className="infoBtn" onClick={() => {navigate(`/player/${result.id}`)}}>More Info</button>
                         </div>
                     )
                 })
             }
         </div>
         <form className='formContainer' onSubmit={submitHandler}>
-            <h2>Crete a New Player</h2>
+            <h2>Create a New Player</h2>
             <label>
                 Player Name:<input onChange={(event) => setNewPlayerName(event.target.value)} />
             </label>

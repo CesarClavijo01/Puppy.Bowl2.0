@@ -72,3 +72,17 @@ ol{
     display: flex;
     flex-direction: column;
 }
+
+.formContainer{
+    border: solid white 2px;
+    display: inline-block;
+    position: relative;
+    left: 475px;
+    top: 100px;
+    padding: 20px;
+}
+
+.search{
+    margin: 25px;
+    padding: 4px;
+}

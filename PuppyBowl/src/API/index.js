@@ -31,3 +31,15 @@ export async function NewPlayer(name, breed){
     const result = response.json();
     return result
 }
+
+export async function DeletePlayers(id){
+    const response = await fetch(`${baseURL}/${id}`,{
+        method: 'delete',
+    });
+
+    if(response.status === 204){
+        return true
+    }
+
+    throw new Error(`Sorry, we couldn't delete player: ${id}`)
+}

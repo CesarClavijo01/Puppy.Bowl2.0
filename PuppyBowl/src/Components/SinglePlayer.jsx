@@ -22,7 +22,6 @@ export default function SinglePlayer(){
             }
             SinglePlayerRender()
         }, [])
-        console.log(player)
 
     return(
         <div className="singlePlayerContainer">
