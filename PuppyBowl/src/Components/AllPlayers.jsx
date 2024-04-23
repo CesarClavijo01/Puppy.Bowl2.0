@@ -57,6 +57,10 @@ export default function AllPlayers(){
     // call the delete function from api and make sure it deletes it from the dom
     async function deleteHandler(id){
         try{
+            setPlayers(players.filter((player) => {
+                console.log('hello')
+                return  player.id != id
+            }))
             const remove = await DeletePlayers(id);
         }
         catch(error){
@@ -66,7 +70,21 @@ export default function AllPlayers(){
 
     if(searchResults.length < 1 ){
         return(
-            <div>Loading...</div>
+            <>
+                <div>Loading...</div>
+
+                <form className='formContainer' onSubmit={submitHandler}>
+                <h2>Create a New Player</h2>
+                <label>
+                    Player Name:<input onChange={(event) => setNewPlayerName(event.target.value)} />
+                </label>
+                <label>
+                    Breed:<input onChange={(event) => setNewPlayerBreed(event.target.value)} />
+                </label>
+                <button className="submitBtn">Submit</button>  
+            </form>
+        </>
+
         )
     }
     return(
